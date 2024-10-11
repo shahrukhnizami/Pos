@@ -27,15 +27,7 @@ function UserAddCategory() {
         </Button>
       </div>
       
-      {/* Search Input */}
-      <Form>
-      <Form.Item label="Search" name="search" type="text">
-        <Input
-          placeholder="Search products"
-          onChange={(e) => setQuery(e.target.value)} // Set the search query state
-        />
-      </Form.Item>
-      </Form>
+     
 
       {/* Add Product Drawer */}
       <AddCategoryDrawer onClose={onClose} open={open} />
