@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../assets/Utills/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
-const AddUserDrawer = ({ open, onClose }) => {
+export const AddUserDrawer = ({ open, onClose }) => {
     const onFinish = async (values) => {
         console.log('Success:', values);
         try {
@@ -86,5 +86,3 @@ const AddUserDrawer = ({ open, onClose }) => {
         </Drawer>
     );
 };
-
-export default AddUserDrawer;
