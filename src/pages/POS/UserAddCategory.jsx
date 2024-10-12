@@ -1,9 +1,7 @@
 import { useState } from "react";
-import AddProductDrawer from "../../components/AddProductDrawer";
 import { Button, Form, Input } from "antd";
-import ProductList from "../../components/ProductsList";
-import AddCategoryDrawer from "../../components/AddCategoryDrawer";
 import CategoryList from "../../components/CategoryList";
+import AddCategoryDrawer from "../../components/AddCategoryDrawer";
 
 function UserAddCategory() {
   
@@ -31,7 +29,7 @@ function UserAddCategory() {
 
       {/* Add Product Drawer */}
       <AddCategoryDrawer onClose={onClose} open={open} />
-
+{/* <AddCategoryDrawer/> */}
       {/* Pass the search query to ProductList */}
       <CategoryList searchQuery={query} />
     </div>

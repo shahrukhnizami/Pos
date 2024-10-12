@@ -9,9 +9,9 @@ import { AuthContext } from './context/Auth'
 import Reports from './pages/Admin/Reports'
 import Purchases from './pages/Admin/Purchases'
 import UserDashboard from './pages/POS/UserDashboard'
-import UserAddProducts from './pages/POS/UserAddProducts'
 import UserAddCategory from './pages/POS/UserAddCategory'
 import Category from './pages/Admin/Category'
+import { UserAddProducts } from './pages/POS/UserAddProducts'
 
 function App() {
   
@@ -58,7 +58,7 @@ function App() {
           path="/userdashboard"
           element={user?.user?.isLogin ? <UserDashboard /> : <Navigate to="/" />}
         >
-          <Route path="useraddproducts" element={<UserAddProducts />} />
+          <Route path="useraddproducts" element={< UserAddProducts/>} />
           <Route path="useraddcategory" element={<UserAddCategory />} />
         </Route>
    

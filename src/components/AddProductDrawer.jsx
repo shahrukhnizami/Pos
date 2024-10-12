@@ -8,7 +8,7 @@ import { useForm } from 'antd/es/form/Form';
 import { CategoryContext } from '../context/Category';
 import TextArea from 'antd/es/input/TextArea';
 
-const AddProductDrawer = ({ open, onClose }) => {
+export const AddProductDrawer = ({ open, onClose }) => {
   const { categories } = useContext(CategoryContext);
   const [form] = useForm();
   const [loading, setLoading] = useState(false);
@@ -163,5 +163,3 @@ const AddProductDrawer = ({ open, onClose }) => {
     </Drawer>
   );
 };
-
-export default AddProductDrawer;

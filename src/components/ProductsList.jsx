@@ -8,7 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CategoryContext } from '../context/Category';
 
-const ProductList = ({ searchQuery }) => {
+const ProductsList = ({ searchQuery }) => {
   const { categories } = useContext(CategoryContext); // Get categories from context
   const [products, setProducts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -285,4 +285,4 @@ const ProductList = ({ searchQuery }) => {
   );
 };
 
-export default ProductList;
+export default ProductsList;

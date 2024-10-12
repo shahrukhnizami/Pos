@@ -1,7 +1,5 @@
 import { useState } from "react";
-import AddProductDrawer from "../../components/AddProductDrawer";
 import { Button, Form, Input } from "antd";
-import ProductList from "../../components/ProductsList";
 import AddCategoryDrawer from "../../components/AddCategoryDrawer";
 import CategoryList from "../../components/CategoryList";
 

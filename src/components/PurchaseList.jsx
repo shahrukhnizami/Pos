@@ -121,6 +121,7 @@ function PurchaseList({ searchQuery }) {
   return (
     <>
       <Table dataSource={filteredpurchases} columns={columns} loading={loading} />
+      
       <Modal
         title="Edit Purchase"
         visible={isEditModalOpen}

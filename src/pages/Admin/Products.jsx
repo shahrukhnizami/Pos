@@ -1,7 +1,9 @@
 import { useState } from "react";
-import AddProductDrawer from "../../components/AddProductDrawer";
+// import AddProductDrawer from "../../components/AddProductDrawer";
 import { Button, Form, Input } from "antd";
-import ProductList from "../../components/ProductsList";
+import ProductsList from "../../components/ProductsList";
+import { AddProductDrawer } from "../../components/AddProductDrawer.jsx";
+// import ProductList from "../../components/ProductsList";
 
 function Products() {
   
@@ -36,10 +38,12 @@ function Products() {
       </Form>
 
       {/* Add Product Drawer */}
-      <AddProductDrawer onClose={onClose} open={open} />
-
+      {/* <AddProductDrawer onClose={onClose} open={open} /> */}
+      <AddProductDrawer onClose={onClose} open={open}/>
+{/* <AddProductDrawer/> */}
       {/* Pass the search query to ProductList */}
-      <ProductList searchQuery={query} />
+      
+      <ProductsList searchQuery={query}/>
     </div>
   );
 }

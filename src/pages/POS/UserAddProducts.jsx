@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button, Form, Input } from "antd";
-import AddProductDrawer from "../../components/AddProductDrawer";
+// import AddProductDrawer from "../../components/AddProductDrawer";
 import ProductList from "../../components/ProductsList";
+import { AddProductDrawer } from "../../components/AddProductDrawer";
 
-function UserAddProducts() {
+export function UserAddProducts() {
   
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState(''); // State for search query
@@ -37,11 +38,10 @@ function UserAddProducts() {
 
       {/* Add Product Drawer */}
       <AddProductDrawer onClose={onClose} open={open} />
+      {/* <AddProductDrawer/> */}
 
       {/* Pass the search query to ProductList */}
       <ProductList searchQuery={query} />
     </div>
   );
 }
-
-export default UserAddProducts;

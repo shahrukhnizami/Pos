@@ -7,14 +7,15 @@ import { toast, ToastContainer } from 'react-toastify';
 import { getAuth, updateEmail, updatePassword } from 'firebase/auth';
 import 'react-toastify/dist/ReactToastify.css';
 
-const { Option } = Select;
 
-const UserList = ({ searchQuery }) => {
+
+export const  UserList = ({ searchQuery }) => {
   const [users, setUsers] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editUser, setEditUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userStatus, setUserStatus] = useState('all'); // State for user status (all/active/inactive)
+  const { Option } = Select;
 
   const auth = getAuth();
 
@@ -223,4 +224,3 @@ const UserList = ({ searchQuery }) => {
   );
 };
 
-export default UserList;
