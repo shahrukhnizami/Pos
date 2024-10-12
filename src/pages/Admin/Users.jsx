@@ -1,6 +1,6 @@
 import { useState } from "react";
-import AddUserDrawer from "../../components/AdduserDrawer.jsx";
-import UserList from "../../components/UserList.jsx";
+import AddUserDrawer from "../../components/AdduserDrawer";
+import UserList from "../../components/UserList";
 import { Button, Form, Input, Spin } from "antd"; // Import Spin for loading indicator
 
 function Users() {
