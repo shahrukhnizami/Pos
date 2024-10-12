@@ -18,7 +18,7 @@ function Purchases() {
     <div>
       <div className="flex justify-between mb-5">
       <h1 className="text text-5xl font-bold">All Purchases</h1>
-        <Button type="primary" onClick={showDrawer}>
+        <Button  danger type="primary" onClick={showDrawer}>
           Add Purchases
         </Button>
       </div>

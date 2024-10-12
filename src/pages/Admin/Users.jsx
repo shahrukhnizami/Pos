@@ -1,10 +1,7 @@
 import { useState } from "react";
-// import AddUserDrawer from "../../components/AdduserDrawer";
-// import UserList from "../../components/UserList.jsx";
 import { Button, Form, Input, Spin } from "antd"; // Import Spin for loading indicator
 import { UserList } from "../../components/UserList";
 import { AddUserDrawer } from "../../components/AdduserDrawer";
-// import UserList from "../../components/UserList";
 
 function Users() {
   // const [loading, setLoading] = useState(false); // Loading state
@@ -50,6 +47,7 @@ function Users() {
       </Form>
 
       <AddUserDrawer onClose={onClose} open={open} onAddUser={handleAddUser} />
+      
       
 {/* <AddUserDrawer/> */}
    
