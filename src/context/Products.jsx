@@ -31,6 +31,12 @@ function ProductContextProvider({ children }) {
       setLoading(false);
     }
   };
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    setCart((prevCart) => [...prevCart, product])
+  }
+
 
   const updateProduct = async (id, quantity) => {
     const productIndex = products.findIndex((data) => data.id == id);
@@ -43,7 +49,9 @@ function ProductContextProvider({ children }) {
       value={{
         products,
         setProducts,
-        updateProduct
+        updateProduct,
+        cart,
+        addToCart
       }}
     >
       {loading ? "Loading..." : children}

@@ -12,6 +12,8 @@ import UserDashboard from './pages/POS/UserDashboard'
 import UserAddCategory from './pages/POS/UserAddCategory'
 import Category from './pages/Admin/Category'
 import { UserAddProducts } from './pages/POS/UserAddProducts'
+import Web from './pages/POS/Web'
+import ProductDetail from './components/ProductDetail'
 
 function App() {
   
@@ -30,10 +32,16 @@ function App() {
 
   return (
     <>
-   
+  
     
     <BrowserRouter>
+    
       <Routes>
+       
+        <Route path='web' element={<Web/>}/>
+        <Route path=':id' element={<ProductDetail />} />
+        {/* <Route path=':id' element={<ProductDetail />} /> */}
+
         <Route path="/" element={getInitialRoute()} />
 
         {/* Admin routes, protected */}

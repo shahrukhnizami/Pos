@@ -5,14 +5,17 @@ import './index.css'
 import AuthContextProvider from './context/Auth.jsx'
 import ProductContextProvider, { ProductContext } from './context/Products.jsx'
 import CategoryContextProvider from './context/Category.jsx'
+import CartContextProvider from './Context/CartContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
       <ProductContextProvider>
         <CategoryContextProvider>
+          <CartContextProvider>
 
           <App />
+          </CartContextProvider>
         </CategoryContextProvider>
 
       </ProductContextProvider>
