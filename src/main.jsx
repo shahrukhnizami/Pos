@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import AuthContextProvider from './context/Auth.jsx'
-import ProductContextProvider, { ProductContext } from './context/Products.jsx'
+import ProductContextProvider from './context/Products.jsx'
 import CategoryContextProvider from './context/Category.jsx'
 import CartContextProvider from './Context/CartContext.jsx'
 
