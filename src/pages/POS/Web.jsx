@@ -9,13 +9,16 @@ import { ProductContext } from '../../context/Products';
 
 const Web = () => {
     const { categories } = useContext(CategoryContext); // Get categories from context
+    const { products } = useContext(ProductContext);    // Get products from context
     const activeCategories = categories.filter(category => category.isActive === true);
 
-    // State for the selected category name
-    const [selectedCategory, setSelectedCategory] = useState('');
+    // State for the selected category name, default is 'all' to show all products
+    const [selectedCategory, setSelectedCategory] = useState('all');
 
-    // Log the active categories
-    console.log("Active categories:", activeCategories);
+    // Filter products based on the selected category
+    const filteredProducts = selectedCategory === 'all'
+        ? products
+        : products.filter(product => product.category === selectedCategory);
 
     return (
         <div>
@@ -53,7 +56,7 @@ const Web = () => {
                                     style={{ backgroundImage: "url(images/banner_1.jpg)" }}
                                 >
                                     <div className="banner_category">
-                                        <a href="categories.html">women's</a>
+                                        <a href="#" onClick={() => setSelectedCategory("women")}>women's</a>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +66,7 @@ const Web = () => {
                                     style={{ backgroundImage: "url(images/banner_2.jpg)" }}
                                 >
                                     <div className="banner_category">
-                                        <a href="categories.html">accessories</a>
+                                        <a href="#" onClick={() => setSelectedCategory("kids")}>kids</a>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +76,7 @@ const Web = () => {
                                     style={{ backgroundImage: "url(images/banner_3.jpg)" }}
                                 >
                                     <div className="banner_category">
-                                        <a href="categories.html">men's</a>
+                                        <a href="#" onClick={() => setSelectedCategory("men")}>men's</a>
                                     </div>
                                 </div>
                             </div>
@@ -96,19 +99,18 @@ const Web = () => {
                                 <div className="new_arrivals_sorting">
                                     <ul className="arrivals_grid_sorting clearfix button-group filters-button-group">
                                         <li
-                                            className="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked"
-                                            data-filter="*"
+                                            className={`grid_sorting_button button d-flex flex-column justify-content-center align-items-center ${selectedCategory === 'all' ? 'active' : ''}`}
+                                            onClick={() => setSelectedCategory('all')}
                                         >
-                                            all
+                                            All
                                         </li>
                                         {activeCategories.map((category) => (
-                                            <li 
-                                                key={category.id} 
-                                                onClick={() => setSelectedCategory(category.categoryname)} // Set selected category name
-                                                className="grid_sorting_button button ml-2 d-flex flex-column justify-content-center align-items-center"
-                                                data-filter={`.${category.categoryname.toLowerCase()}`} // Adjusting filter to match category
+                                            <li
+                                                key={category.id}
+                                                onClick={() => setSelectedCategory(category.categoryname)}
+                                                className={`grid_sorting_button button ml-2 d-flex flex-column justify-content-center align-items-center ${selectedCategory === category.categoryname ? 'active' : ''}`}
                                             >
-                                                {category.categoryname} 
+                                                {category.categoryname}
                                             </li>
                                         ))}
                                     </ul>
@@ -117,12 +119,9 @@ const Web = () => {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <div
-                                    className="product-grid d-flex flex-wrap justify-content-right align-items-row"
-                                    data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'
-                                >
-                                    {/* Product 1 */}
-                                    <CardsNew />
+                                <div className="product-grid d-flex flex-wrap justify-content-right align-items-row">
+                                    {/* Pass the filtered products to CardsNew */}
+                                    <CardsNew products={filteredProducts} />
                                 </div>
                             </div>
                         </div>
@@ -130,8 +129,8 @@ const Web = () => {
                 </div>
 
                 {/* Display Selected Category */}
-                <div className="selected_category">
-                    {selectedCategory && (
+                <div className="selected_category text-center mt-4">
+                    {selectedCategory !== 'all' && (
                         <h3>Selected Category: {selectedCategory}</h3>
                     )}
                 </div>

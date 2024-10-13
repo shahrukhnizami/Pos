@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { LaptopOutlined, NotificationOutlined, ProductOutlined, UserOutlined } from '@ant-design/icons';
+import { LaptopOutlined, NotificationOutlined, ProductOutlined, RightSquareFilled, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Layout, Menu, theme, message } from 'antd';
 import { Outlet, useNavigate } from 'react-router';
 import { auth } from '../../assets/Utills/firebase';
 import { signOut } from 'firebase/auth';
 import { AuthContext } from '../../context/Auth'; // Ensure this context is correctly set up
+import { Link } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
 
@@ -30,6 +31,12 @@ const items2 = [
     label: "Category",
     icon: NotificationOutlined,
     route: "/admin/category",
+  },
+  {
+    label: "Go tO web",
+    
+    icon: RightSquareFilled,
+    route: "../web",
   },
 ].map((data) => ({
   key: data.route,
@@ -61,6 +68,7 @@ const Dashboard = () => {
         <div className="demo-logo text-white font-bold text-4xl">
           Welcome {user ? user.displayName || user.email : "Admin"}
         </div>
+      
         <Button onClick={handleLogout} danger>
           Logout
         </Button>

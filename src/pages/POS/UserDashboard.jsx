@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { LaptopOutlined, NotificationOutlined, ProductOutlined, UserOutlined } from '@ant-design/icons';
+import { LaptopOutlined, NotificationOutlined, ProductOutlined, RightSquareFilled, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Layout, Menu, theme, message } from 'antd';
 import { Outlet, useNavigate } from 'react-router';
 import { auth } from '../../assets/Utills/firebase';
@@ -30,6 +30,11 @@ const items2 = [
     label: "Add Category",
     icon: NotificationOutlined,
     route: "/userdashboard/useraddcategory",
+  },
+  {
+    label: "Go tO web",    
+    icon: RightSquareFilled,
+    route: "../web",
   },
 ].map((data) => ({
   key: data.route,

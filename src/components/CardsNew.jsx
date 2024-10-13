@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
-import { ProductContext } from '../context/Products';
 import { Link } from 'react-router-dom';
 
-const CardsNew = () => {
-  const { products } = useContext(ProductContext); // Get products from context
+const CardsNew = ({products}) => {
+  // const { products } = useContext(ProductContext); // Get products from context
 
-  console.log("allProducts", products); // Log the products data to the console
+  // console.log("allProducts", products); // Log the products data to the console
 
   return (
     <>
@@ -33,10 +31,12 @@ const CardsNew = () => {
                   <div className="product_price">${product.price}</div>
                 </div>
               </div>
-              <div className="red_button add_to_cart_button">
-                <a href="#">add to cart</a>
-              </div>
               </Link>
+              <div className="red_button add_to_cart_button">
+                <a onClick={() => addToCart(product)} href="#">add to cart</a>
+                {/* <button onClick={() => addToCart(product)}>Add to Cart</button> */}
+              </div>
+              
             </div>
             
           ))

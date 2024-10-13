@@ -13,7 +13,6 @@ createRoot(document.getElementById('root')).render(
       <ProductContextProvider>
         <CategoryContextProvider>
           <CartContextProvider>
-
           <App />
           </CartContextProvider>
         </CategoryContextProvider>
