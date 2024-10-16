@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Button, Image } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { CartContext } from "../Context/CartContext";
+import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/Auth"; // to get the user info
 import { db } from "../assets/Utills/firebase"; // Firebase Firestore instance
 import { addDoc, collection } from "firebase/firestore"; // For adding orders
