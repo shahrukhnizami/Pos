@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { AuthContext } from '../context/Auth';
 import { auth } from '../assets/Utills/firebase';
-import { CartContext } from '../Context/CartContext';
+import { CartContext } from '../context/CartContext';
 import Cart from '../pages/Cart';
 
 
