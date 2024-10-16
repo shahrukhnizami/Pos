@@ -33,6 +33,11 @@ const items2 = [
     route: "/admin/category",
   },
   {
+    label: "Ordes",
+    icon: NotificationOutlined,
+    route: "/admin/orders",
+  },
+  {
     label: "Go tO web",
     
     icon: RightSquareFilled,

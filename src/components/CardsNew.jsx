@@ -1,6 +1,14 @@
+import { Button } from 'antd';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../Context/CartContext';
 
-const CardsNew = ({products}) => {
+
+
+const CardsNew = ({products},{item}) => {
+  const {  addItemTOCart,isItemAdded,quantity } = useContext(CartContext);
+  
+  
   // const { products } = useContext(ProductContext); // Get products from context
 
   // console.log("allProducts", products); // Log the products data to the console
@@ -32,9 +40,12 @@ const CardsNew = ({products}) => {
                 </div>
               </div>
               </Link>
-              <div className="red_button add_to_cart_button">
-                <a onClick={() => addToCart(product)} href="#">add to cart</a>
-                {/* <button onClick={() => addToCart(product)}>Add to Cart</button> */}
+              <div className="flex justify-center">
+              <Button type="primary" danger onClick={() => addItemTOCart(product)}>
+                {isItemAdded(product.id)
+                  ? `Added (${isItemAdded(product.id).quantity})`
+                  : `Add to Cart`}
+              </Button>
               </div>
               
             </div>

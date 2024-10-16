@@ -35,7 +35,7 @@ function AuthContextProvider({ children }) {
     return subscribe;
   }, []);
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user,setUser }}>
       {loader ? (
         <div
           className="flex h-screen

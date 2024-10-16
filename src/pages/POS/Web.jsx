@@ -6,11 +6,13 @@ import Newsletter from '../../components/Newsletter';
 import CardsNew from '../../components/CardsNew';
 import { CategoryContext } from '../../context/Category';
 import { ProductContext } from '../../context/Products';
+import { Link } from 'react-router-dom';
 
 const Web = () => {
     const { categories } = useContext(CategoryContext); // Get categories from context
     const { products } = useContext(ProductContext);    // Get products from context
     const activeCategories = categories.filter(category => category.isActive === true);
+    const [searchQuery, setSearchQuery] = useState('');
 
     // State for the selected category name, default is 'all' to show all products
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -24,7 +26,7 @@ const Web = () => {
         <div>
             <div className="super_container">
                 {/* Header */}
-                <Header />
+                <Header setSearchQuery={setSearchQuery}  />
 
                 {/* Slider */}
                 <div
@@ -49,14 +51,18 @@ const Web = () => {
                 {/* Banner */}
                 <div className="banner">
                     <div className="container">
+                   
                         <div className="row">
                             <div className="col-md-4">
                                 <div
                                     className="banner_item align-items-center"
                                     style={{ backgroundImage: "url(images/banner_1.jpg)" }}
                                 >
+                                    
                                     <div className="banner_category">
-                                        <a href="#" onClick={() => setSelectedCategory("women")}>women's</a>
+                                        {/* <a href="#" onClick={() => setSelectedCategory("women")}>women's</a> */}
+                                        <Link to={`/${categories,"women"}`}>  women's</Link>
+                                        {/* onClick={() => setSelectedCategory(category.categoryname)} */}
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +72,8 @@ const Web = () => {
                                     style={{ backgroundImage: "url(images/banner_2.jpg)" }}
                                 >
                                     <div className="banner_category">
-                                        <a href="#" onClick={() => setSelectedCategory("kids")}>kids</a>
+                                   
+                                        <Link to={`/${categories,"kids"}`}>  kids</Link>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +83,7 @@ const Web = () => {
                                     style={{ backgroundImage: "url(images/banner_3.jpg)" }}
                                 >
                                     <div className="banner_category">
-                                        <a href="#" onClick={() => setSelectedCategory("men")}>men's</a>
+                                    <Link to={`/${categories,"mens"}`}>Mens</Link>
                                     </div>
                                 </div>
                             </div>
@@ -128,12 +135,7 @@ const Web = () => {
                     </div>
                 </div>
 
-                {/* Display Selected Category */}
-                <div className="selected_category text-center mt-4">
-                    {selectedCategory !== 'all' && (
-                        <h3>Selected Category: {selectedCategory}</h3>
-                    )}
-                </div>
+                
 
                 {/* Benefits */}
                 <Benefits />

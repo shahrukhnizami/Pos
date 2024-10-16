@@ -4,17 +4,12 @@ import { signOut } from 'firebase/auth';
 import { AuthContext } from '../context/Auth';
 import { auth } from '../assets/Utills/firebase';
 import { CartContext } from '../Context/CartContext';
+import Cart from '../pages/Cart';
 
 
 function Header(){
 	const { cartitem	} = useContext(CartContext);
 
-
-	
-	
-
-	
-	
 
 	const {user} = useContext(AuthContext)
 	// console.log("User",user);
@@ -81,24 +76,35 @@ function Header(){
                   </ul>
                 </li>
                 <li className="account">
-                  <a href="#">
-                    My Account
-                    <i className="fa fa-angle-down" />
-                  </a>
-                  <ul className="account_selection">
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-sign-in" aria-hidden="true" />
-                        Sign In
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-user-plus" aria-hidden="true" />
-                        Register
-                      </a>
-                    </li>
-                  </ul>
+                {
+									 user ?.islogin ? (<>
+									
+									 <a className='px-3' href="#">{user?.userinfo?.email}
+										<i className=" fa fa-angle-down"></i>
+									 	<img width={"30px"} className="mx-2 avatar rounded-4  avatar-lg" src={user?.userinfo?.photo} />
+									</a>									
+									<ul className="account_selection">
+									<li onClick={logoutUser}><Link to={"./"}><i className="fa fa-user-plus"   aria-hidden="true"></i>Logout</Link></li>
+									</ul></>
+									):
+									(<>
+
+									<a href="#">My Acount<i className="fa fa-angle-down"></i>
+									</a>
+									<ul className="account_selection">
+										<li><Link to={"signin"}><i className="fa fa-sign-in" aria-hidden="true"></i>Sign In</Link></li>
+										<li><Link to={"register"}><i className="fa fa-user-plus" aria-hidden="true"></i>Register</Link></li>
+										{/* <li><Link to={"signup"}><i className="fa fa-user-plus" aria-hidden="true"></i>SignUp</Link></li> */}
+							
+
+
+																				
+									</ul>
+
+
+									
+									</>)
+									}
                 </li>
               </ul>
             </div>
@@ -149,12 +155,12 @@ function Header(){
                   </a>
                 </li>
                 <li className="checkout">
-                  <a href="#">
+                 <Link to={"../cart"}>
                     <i className="fa fa-shopping-cart" aria-hidden="true" />
                     <span id="checkout_items" className="checkout_items">
                     {cartitem.length}
                     </span>
-                  </a>
+                    </Link>
                 </li>
               </ul>
               <div className="hamburger_container">

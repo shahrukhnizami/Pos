@@ -78,9 +78,12 @@ function CartContextProvider({ children }) {
     }
 
   }
+  const clearCart = () => {
+   setCartitem([]) // Clears all items from the cart
+  };
 
   return (
-    <CartContext.Provider value={{ cartitem, setCartitem, addItemTOCart, isItemAdded, removeItemFromCart, lessQuantitfromcart }}>
+    <CartContext.Provider value={{ cartitem, setCartitem, addItemTOCart, isItemAdded, removeItemFromCart, lessQuantitfromcart,clearCart }}>
       {children}
     </CartContext.Provider>
   );

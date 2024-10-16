@@ -13,6 +13,9 @@ import Category from './pages/Admin/Category';
 import { UserAddProducts } from './pages/POS/UserAddProducts';
 import Web from './pages/POS/Web';
 import ProductDetail from './components/ProductDetail';
+import Cart from './pages/Cart';
+import Orders from './pages/Admin/Orders';
+import Categories from './pages/Categories';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -37,6 +40,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="web" element={<Web />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path=":categoryname" element={<Categories />} />
+       
+        
+
+        
         <Route path=":id" element={<ProductDetail />} />
         <Route path="/" element={getInitialRoute()} />
 
@@ -49,6 +58,7 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="purchases" element={<Purchases />} />
           <Route path="category" element={<Category />} />
+          <Route path="orders" element={<Orders />} />
         </Route>
 
         {/* POS routes */}
