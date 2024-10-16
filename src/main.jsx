@@ -5,7 +5,7 @@ import './index.css'
 import AuthContextProvider from './context/Auth.jsx'
 import ProductContextProvider from './context/Products.jsx'
 import CategoryContextProvider from './context/Category.jsx'
-import CartContextProvider from './Context/CartContext.jsx'
+import CartContextProvider from './context/CartContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
