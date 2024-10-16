@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Input, Spin } from "antd"; // Import Spin for loading indicator
 import { UserList } from "../../components/UserList";
-import { AddUserDrawer } from "../../components/AdduserDrawer";
+import { AddUserDrawer } from "../../components/AddUserDrawer";
 
 function Users() {
   // const [loading, setLoading] = useState(false); // Loading state
