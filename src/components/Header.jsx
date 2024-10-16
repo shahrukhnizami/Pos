@@ -4,7 +4,6 @@ import { signOut } from 'firebase/auth';
 import { AuthContext } from '../context/Auth';
 import { auth } from '../assets/Utills/firebase';
 import { CartContext } from '../context/CartContext';
-import Cart from '../pages/Cart';
 
 
 function Header(){
@@ -36,24 +35,12 @@ function Header(){
               <ul className="top_nav_menu">
                 {/* Currency / Language / My Account */}
                 <li className="currency">
-                  <a href="#">
-                    usd
-                    <i className="fa fa-angle-down" />
-                  </a>
-                  <ul className="currency_selection">
-                    <li>
-                      <a href="#">cad</a>
-                    </li>
-                    <li>
-                      <a href="#">aud</a>
-                    </li>
-                    <li>
-                      <a href="#">eur</a>
-                    </li>
-                    <li>
-                      <a href="#">gbp</a>
-                    </li>
-                  </ul>
+                  <Link to={"../admin"}>
+                    Back To Dashboard
+                    
+                    </Link>
+                 
+                 
                 </li>
                 <li className="language">
                   <a href="#">

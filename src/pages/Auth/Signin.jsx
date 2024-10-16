@@ -68,6 +68,18 @@ const Signin = () => {
           </Form.Item>
         </Form>
       </div>
+      <div className='px-20'>
+      <div>
+        <p>Admin</p>
+        <p>Email: admin@gmail.com</p>
+        <p>Password: 1234567</p>
+      </div>
+      <div>
+        <p>User</p>
+        <p>Email: shahrukhn@gmail.com</p>
+        <p>Password: 1234567</p>
+      </div>
+      </div>
     </>
   );
 };
