@@ -54,7 +54,7 @@ function ProductContextProvider({ children }) {
         addToCart
       }}
     >
-      {loading ? "Loading..." : children}
+      {children}
     </ProductContext.Provider>
   );
 }
