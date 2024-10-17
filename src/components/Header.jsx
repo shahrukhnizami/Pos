@@ -35,7 +35,7 @@ function Header(){
               <ul className="top_nav_menu">
                 {/* Currency / Language / My Account */}
                 <li className="currency">
-                  <Link to={"../admin"}>
+                  <Link to={"../admin/products"}>
                     Back To Dashboard
                     
                     </Link>

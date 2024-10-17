@@ -45,15 +45,16 @@ function CartContextProvider({ children }) {
     setCartitem([...arr]);
   }
   function lessQuantitfromcart(id) {
-    const arr = cartitem;
-    const itemIndex = cartitem.findIndex((data) => data.id == id);
-    {
-      arr[itemIndex].quantity--;
+    const arr = [...cartitem];  // Clone the current cart items to avoid direct mutation
+    const itemIndex = arr.findIndex((data) => data.id === id);  // Find the item by its id
 
+    if (itemIndex !== -1 && arr[itemIndex].quantity > 0) {
+        arr[itemIndex].quantity--;  // Decrease the quantity
     }
-    setCartitem([...arr]);
 
-  }
+    setCartitem(arr);  // Update the state
+}
+
 
 
 

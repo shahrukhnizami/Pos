@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Modal, Space, Table, Switch, Select, Spin } from 'antd';
+import { Input, Modal, Space, Table, Switch, Select, Spin, Button } from 'antd';
 import { db } from '../assets/Utills/firebase';
 import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -7,6 +7,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const OrdersList = ({ searchQuery }) => {
+  const [isViewing, setIsViewing] = useState(false); // For viewing order details
+const [viewOrder, setViewOrder] = useState(null); // The order to view
+
   const [orders, setOrders] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editOrder, setEditOrder] = useState(null);
@@ -34,7 +37,11 @@ export const OrdersList = ({ searchQuery }) => {
       setLoading(false);
     }
   };
-
+  const view = (record) => {
+    setIsViewing(true);
+    setViewOrder({ ...record });
+  };
+  
   const edit = (record) => {
     setIsEditing(true);
     setEditOrder({ ...record });
@@ -89,6 +96,7 @@ export const OrdersList = ({ searchQuery }) => {
       const searchFilter =
       order.userId.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.customerDetails?.name.toLowerCase().includes(searchQuery.toLowerCase())||
       order.totalAmount.toString().includes(searchQuery);
 
     // Combine both statusFilter and searchFilter
@@ -102,9 +110,9 @@ export const OrdersList = ({ searchQuery }) => {
       key: 'id',
     },
     {
-      title: 'User ID',
-      dataIndex: 'userId',
-      key: 'userId',
+      title: 'Customer Name',
+      dataIndex: ['customerDetails', 'name'], // Fetching from customerDetails object
+      key: 'customerName',
     },
     {
       title: 'Total Amount',
@@ -143,9 +151,12 @@ export const OrdersList = ({ searchQuery }) => {
         <Space size="middle">
           <EditOutlined onClick={() => edit(record)} className="hover:text-green-500" />
           <DeleteOutlined onClick={() => handleDelete(record)} className="hover:text-red-500" />
+          <Button onClick={() => view(record)}>Order Detail</Button>
         </Space>
       ),
     },
+   
+    
   ];
 
   return (
@@ -199,6 +210,34 @@ export const OrdersList = ({ searchQuery }) => {
               </Select>
             </div>
           </Modal>
+          <Modal
+  open={isViewing}
+  onCancel={() => setIsViewing(false)}
+  footer={null}
+>
+  {viewOrder && (
+    <div>
+      
+      <h3 className='text-3xl py-2' >Order Detail</h3>
+      <h3 >Order ID: {viewOrder.id}</h3>
+      <h5>Customer Name:<strong> {viewOrder.customerDetails.name}</strong></h5>
+      <h5>Phone Number: <strong>{viewOrder.customerDetails.phone}</strong></h5>
+      <h5>Address:<strong> {viewOrder.customerDetails.address}</strong></h5>
+      <h5>Total Amount:<strong> {viewOrder.totalAmount}</strong></h5>
+      <h5>Total Quantity:<strong> {viewOrder.totalQuantity}</strong></h5>
+      <h5>Status:<strong> {viewOrder.isProcessed ? 'Processed' : 'Unprocessed'}</strong></h5>
+      
+      <h3 className='text-3xl py-2'>Items</h3>
+      {viewOrder.items?.map(item => (
+        <div key={item.id}>
+          <h5><strong>{item.title}</strong> - Quantity:<strong> {item.quantity}</strong></h5>
+        </div>
+      ))}
+    </div>
+  )}
+</Modal>
+
+
         </>
       )}
       <ToastContainer />

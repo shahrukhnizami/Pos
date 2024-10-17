@@ -6,9 +6,11 @@ import { useParams } from 'react-router';
 import { ProductContext } from '../context/Products';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 
 const ProductDetail = () => {
-  const { products, addToCart } = useContext(ProductContext);
+  const { products } = useContext(ProductContext);
+  const {  addItemTOCart,isItemAdded,lessQuantitfromcart,quantity } = useContext(CartContext);
   const { id } = useParams();
 
   // Find the product that matches the id from params
@@ -123,21 +125,24 @@ const ProductDetail = () => {
                 <div className="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                   <span>Quantity:</span>
                   <div className="quantity_selector">
-                    <span className="minus">
-                      <i className="fa fa-minus" aria-hidden="true" />
-                    </span>
-                    <span id="quantity_value">1</span>
-                    <span className="plus">
-                      <i className="fa fa-plus" aria-hidden="true" />
-                    </span>
+                  <span  onClick={()=>lessQuantitfromcart(product.id)} className="minus">
+                    <i className="fa fa-minus" aria-hidden="true" />
+                  </span>
+                  {isItemAdded(product.id)?(<span id="quantity_value">{isItemAdded(product.id).quantity}</span>):
+                  (<span id="quantity_value">{1}</span>)}
+                    {/* <span id="quantity_value">1</span> */}
+                    <span onClick={()=>addItemTOCart(product)}  className="plus">
+                    <i className="fa fa-plus" aria-hidden="true" />
+                  </span>
                   </div>
 
 
                 </div>
                 <div className='py-4'>
-                  <Button type="primary" size='large' shape='round' danger onClick={handleAddToCart}>
-                    Add To Cart
-                  </Button>
+                <Button type="primary" danger onClick={() => addItemTOCart(product)}>
+                            
+                  Add to Cart
+              </Button>
                 </div>
 
               </div>
