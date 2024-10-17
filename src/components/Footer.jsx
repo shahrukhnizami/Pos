@@ -54,10 +54,10 @@ function Footer(){
       <div className="col-lg-12">
         <div className="footer_nav_container">
           <div className="cr">
-            ©2018 All Rights Reserverd. Made with{" "}
+            ©2024 All Rights Reserverd. Made with{" "}
             <i className="fa fa-heart-o" aria-hidden="true" /> by{" "}
             <a href="#">Colorlib</a> &amp; distributed by{" "}
-            <a href="https://themewagon.com">ThemeWagon</a>
+            <a href="#">Shahrukh Nizami</a>
           </div>
         </div>
       </div>

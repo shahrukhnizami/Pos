@@ -36,7 +36,7 @@ const CardsNew = ({products},{item}) => {
                   <h6 className="product_name">
                     <a href="#">{product.title}</a>
                   </h6>
-                  <div className="product_price">${product.price}</div>
+                  <div className="product_price">Rs. {product.price}</div>
                 </div>
               </div>
               </Link>

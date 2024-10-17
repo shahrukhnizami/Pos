@@ -99,8 +99,8 @@ const ProductDetail = () => {
                   <span>Free delivery</span>
                 </div>
 
-                <div className="original_price">${product.price}</div>
-                <div className="product_price">${product.price}</div>
+                <div className="original_price">Rs. {product.price}</div>
+                <div className="product_price">Rs. {product.price}</div>
 
                 {/* Star Rating */}
                 <ul className="star_rating">
@@ -112,14 +112,14 @@ const ProductDetail = () => {
                 </ul>
 
                 {/* Color Options */}
-                <div className="product_color">
+                {/* <div className="product_color">
                   <span>Select Color:</span>
                   <ul>
 
                     <li key={id} style={{ background: `${product.color}` }} />
 
                   </ul>
-                </div>
+                </div> */}
 
                 {/* Quantity Selector */}
                 <div className="quantity d-flex flex-column flex-sm-row align-items-sm-center">
