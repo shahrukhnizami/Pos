@@ -15,7 +15,7 @@ import Web from './pages/POS/Web';
 import ProductDetail from './components/ProductDetail';
 import Cart from './pages/Cart';
 import Orders from './pages/Admin/Orders';
-import Categories from './pages/Categories';
+// import Categories from './pages/Categories';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -41,7 +41,7 @@ function App() {
       <Routes>
         <Route path="web" element={<Web />} />
         <Route path="cart" element={<Cart />} />
-        <Route path=":categoryname" element={<Categories />} />
+        {/* <Route path=":categoryname" element={<Categories />} /> */}
        
         
 
