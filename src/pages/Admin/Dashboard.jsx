@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import { LaptopOutlined, NotificationOutlined, ProductOutlined, RightSquareFilled, UserOutlined } from '@ant-design/icons';
+import { LaptopOutlined, NotificationOutlined, ProductOutlined, RightSquareFilled, StockOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Layout, Menu, theme, message } from 'antd';
 import { Outlet, useNavigate } from 'react-router';
 import { auth } from '../../assets/Utills/firebase';
 import { signOut } from 'firebase/auth';
 import { AuthContext } from '../../context/Auth'; // Ensure this context is correctly set up
-import { Link } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
 
@@ -36,6 +35,11 @@ const items2 = [
     label: "Ordes",
     icon: NotificationOutlined,
     route: "/admin/orders",
+  },
+  {
+    label: "Stocks",
+    icon: StockOutlined,
+    route: "/admin/stocks",
   },
   {
     label: "Go tO web",

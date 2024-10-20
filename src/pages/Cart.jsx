@@ -168,13 +168,15 @@ function Cart() {
 
         {/* Modal for customer details */}
         <Modal
-          title="Enter Customer Details"
+          
           visible={isModalOpen}
           onCancel={() => setIsModalOpen(false)} // Close modal on cancel
           onOk={handleSubmitOrder} // Submit order on OK click
         >
           <div>
+            <h1 className="text-4xl py-4 font-semibold">Enter Customer Details</h1>
             <Input
+            className="py-2"
               placeholder="Name"
               value={customerDetails.name}
               onChange={(e) =>
@@ -182,12 +184,13 @@ function Cart() {
               }
             />
             <Input
+             className="my-2 py-2"
               placeholder="Address"
               value={customerDetails.address}
               onChange={(e) =>
                 setCustomerDetails({ ...customerDetails, address: e.target.value })
               }
-              className="my-2"
+             
             />
             <Input
               placeholder="Phone"
@@ -195,7 +198,7 @@ function Cart() {
               onChange={(e) =>
                 setCustomerDetails({ ...customerDetails, phone: e.target.value })
               }
-              className="my-2"
+              className="my-2 py-2"
             />
           </div>
         </Modal>

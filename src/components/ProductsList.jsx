@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Input, Modal, Space, Table, Spin, Upload, Button, message, Select, Switch } from 'antd';
+import { Input, Modal, Space, Table, Spin, Upload,  message, Select, Switch } from 'antd';
 import { db, storage } from '../assets/Utills/firebase'; // Ensure you import Firebase storage here
-import { collection, deleteDoc, doc, getDocs, updateDoc, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'; // For uploading images
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { toast, ToastContainer } from 'react-toastify';

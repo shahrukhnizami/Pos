@@ -15,6 +15,7 @@ import Web from './pages/POS/Web';
 import ProductDetail from './components/ProductDetail';
 import Cart from './pages/Cart';
 import Orders from './pages/Admin/Orders';
+import Stocks from './pages/Admin/Stocks';
 // import Categories from './pages/Categories';
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
           <Route path="purchases" element={<Purchases />} />
           <Route path="category" element={<Category />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="Stocks" element={<Stocks />} />
         </Route>
 
         {/* POS routes */}

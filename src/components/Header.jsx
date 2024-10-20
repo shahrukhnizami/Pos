@@ -27,7 +27,7 @@ function Header(){
         <div className="row">
           <div className="col-md-6">
             <div className="top_nav_left">
-              free shipping on all u.s orders over $50
+              free shipping Shahrukh on all u.s orders over $50
             </div>
           </div>
           <div className="col-md-6 text-right">
