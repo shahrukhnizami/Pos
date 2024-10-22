@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { LaptopOutlined, NotificationOutlined, ProductOutlined, RightSquareFilled, StockOutlined, UserOutlined } from '@ant-design/icons';
+import React, { useContext, useState } from 'react';
+import { MenuFoldOutlined, MenuUnfoldOutlined, LaptopOutlined, NotificationOutlined, ProductOutlined, RightSquareFilled, StockOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Layout, Menu, theme, message } from 'antd';
 import { Outlet, useNavigate } from 'react-router';
 import { auth } from '../../assets/Utills/firebase';
 import { signOut } from 'firebase/auth';
-import { AuthContext } from '../../context/Auth'; // Ensure this context is correctly set up
+import { AuthContext } from '../../context/Auth';
 
 const { Header, Content, Sider } = Layout;
 
@@ -22,7 +22,6 @@ const items2 = [
   },
   {
     label: "Purchases",
-    
     icon: ProductOutlined,
     route: "/admin/purchases",
   },
@@ -32,7 +31,7 @@ const items2 = [
     route: "/admin/category",
   },
   {
-    label: "Ordes",
+    label: "Orders",
     icon: NotificationOutlined,
     route: "/admin/orders",
   },
@@ -42,8 +41,7 @@ const items2 = [
     route: "/admin/stocks",
   },
   {
-    label: "Go tO web",
-    
+    label: "Go to web",
     icon: RightSquareFilled,
     route: "../web",
   },
@@ -54,17 +52,18 @@ const items2 = [
 }));
 
 const Dashboard = () => {
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
   
   // Use AuthContext to get the user information
-  const { user } = useContext(AuthContext); // Ensure your AuthContext provides the user object
-  
+  const { user } = useContext(AuthContext);
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
       message.success("User logged out successfully");
-      navigate("/"); // Redirect to login page after logout
+      navigate("/"); 
     } catch (error) {
       message.error("Logout failed. Please try again.");
       console.error("Logout error:", error);
@@ -73,17 +72,34 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <Header className='bg-red-600 flex justify-between items-center'>
-        <div className="demo-logo text-white font-bold text-4xl">
+      <Header className='bg-red-600 flex justify-between items-center px-4'>
+        <div className="demo-logo text-white font-bold text-2xl md:text-4xl">
           Welcome {user ? user.displayName || user.email : "Admin"}
         </div>
-      
         <Button onClick={handleLogout} danger>
           Logout
         </Button>
       </Header>
       <Layout>
-        <Sider width={200} style={{ background: colorBgContainer }}>
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={setCollapsed}
+          breakpoint="md"
+          collapsedWidth="0"
+          width={200}
+          style={{ background: colorBgContainer }}
+        >
+          {/* Toggle button at the top of the sidebar */}
+          <div style={{ padding: '10px 16px', textAlign: 'left' }}>
+            <Button
+              type="primary"
+              onClick={() => setCollapsed(!collapsed)}
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              size="large"
+              style={{ marginBottom: '20px', width: '100%' }} // Full-width button for small screens
+            />
+          </div>
           <Menu
             mode="inline"
             defaultSelectedKeys={["/admin/users"]}
@@ -94,7 +110,7 @@ const Dashboard = () => {
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            {/* You can add Breadcrumb items here if needed */}
+            {/* Add Breadcrumb items if needed */}
           </Breadcrumb>
           <Content
             style={{
