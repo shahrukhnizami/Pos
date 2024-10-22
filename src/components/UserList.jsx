@@ -6,10 +6,9 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import { getAuth, updateEmail, updatePassword } from 'firebase/auth';
 import 'react-toastify/dist/ReactToastify.css';
+// import './UserList.css'; // Optional CSS for custom styling
 
-
-
-export const  UserList = ({ searchQuery }) => {
+export const UserList = ({ searchQuery }) => {
   const [users, setUsers] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editUser, setEditUser] = useState(null);
@@ -116,16 +115,19 @@ export const  UserList = ({ searchQuery }) => {
       dataIndex: 'username',
       key: 'username',
       render: (text) => <a>{text}</a>,
+      width: 150, // Set fixed width
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+      width: 200,
     },
     {
       title: 'Role',
       dataIndex: 'role',
       key: 'role',
+      width: 100,
     },
     {
       title: 'Action',
@@ -136,6 +138,7 @@ export const  UserList = ({ searchQuery }) => {
           <DeleteOutlined onClick={() => handleDelete(record)} className="hover:text-red-500" />
         </Space>
       ),
+      width: 100,
     },
     {
       title: 'Enable/Disable',
@@ -156,6 +159,7 @@ export const  UserList = ({ searchQuery }) => {
           }}
         />
       ),
+      width: 150,
     },
   ];
 
@@ -166,19 +170,25 @@ export const  UserList = ({ searchQuery }) => {
           <Spin size="large" />
         </div>
       ) : (
-        <>
+        <div className="responsive-table-wrapper">
           {/* Dropdown to select active, inactive, or all users */}
           <Select
             value={userStatus}
             onChange={(value) => setUserStatus(value)}
-            style={{ marginBottom: 16, width: 200 }}
+            style={{ marginBottom: 16, width: '100%' }}
           >
             <Option value="all">All Users</Option>
             <Option value="active">Active Users</Option>
             <Option value="inactive">Inactive Users</Option>
           </Select>
-          <Table columns={columns} dataSource={filteredUsers} rowKey="id" />
-        </>
+          <Table
+            columns={columns}
+            dataSource={filteredUsers}
+            rowKey="id"
+            scroll={{ x: 700 }} // Enable horizontal scroll for small screens
+            pagination={{ pageSize: 5 }} // Limit the number of rows per page
+          />
+        </div>
       )}
       <Modal
         title="Editing User"
@@ -223,4 +233,3 @@ export const  UserList = ({ searchQuery }) => {
     </>
   );
 };
-
