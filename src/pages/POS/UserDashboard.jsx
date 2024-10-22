@@ -73,7 +73,11 @@ const UserDashboard = () => {
           />
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }} />
+     
+        <Breadcrumb style={{ margin: '16px 0' }}>
+            {/* Add Breadcrumb items if needed */}
+            <h1 className='text-3xl  font-bold'>Well Come User Dashboard</h1>
+          </Breadcrumb>
           <Content
             style={{
               padding: 24,
@@ -84,7 +88,7 @@ const UserDashboard = () => {
             }}
           >
             <Outlet />
-            <h1 className='text-3xl text-center font-bold'>Well Come User Dashboard</h1>
+            
           </Content>
         </Layout>
       </Layout>

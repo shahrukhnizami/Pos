@@ -110,6 +110,7 @@ const Dashboard = () => {
         <Layout style={{ padding: '0 24px 24px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             {/* Add Breadcrumb items if needed */}
+            <h1 className='text-3xl text-center font-bold'>Well Come Admin Dashboard</h1>
           </Breadcrumb>
           <Content
             style={{
@@ -120,9 +121,11 @@ const Dashboard = () => {
               borderRadius: borderRadiusLG,
             }}
           >
+           
             <Outlet />
-            <h1 className='text-3xl text-center font-bold'>Well Come Admin Dashboard</h1>
+           
           </Content>
+          
         </Layout>
       </Layout>
     </Layout>
