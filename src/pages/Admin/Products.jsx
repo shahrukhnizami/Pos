@@ -1,15 +1,12 @@
 import { useState } from "react";
-// import AddProductDrawer from "../../components/AddProductDrawer";
 import { Button, Form, Input } from "antd";
 import ProductsList from "../../components/ProductsList";
 import { AddProductDrawer } from "../../components/AddProductDrawer.jsx";
-// import ProductList from "../../components/ProductsList";
 
 function Products() {
-  
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState(''); // State for search query
-  
+
   const showDrawer = () => {
     setOpen(true);
   };
@@ -19,31 +16,34 @@ function Products() {
   };
 
   return (
-    <div>
-      <div className="flex justify-between mb-5">
-        <h1 className="text text-5xl font-bold">All Products</h1>
-        <Button danger type="primary" onClick={showDrawer}>
+    <div className="container mx-auto px-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-5">
+        <h1 className="text-2xl md:text-5xl font-bold">All Products</h1>
+        <Button 
+          danger 
+          type="primary" 
+          onClick={showDrawer} 
+          className="mt-4 md:mt-0"
+        >
           Add Products
         </Button>
       </div>
-      
+
       {/* Search Input */}
       <Form>
-      <Form.Item label="Search" name="search" type="text">
-        <Input
-          placeholder="Search products"
-          onChange={(e) => setQuery(e.target.value)} // Set the search query state
-        />
-      </Form.Item>
+        <Form.Item label="Search" name="search" className="mb-4">
+          <Input
+            placeholder="Search products"
+            onChange={(e) => setQuery(e.target.value)} // Set the search query state
+          />
+        </Form.Item>
       </Form>
 
       {/* Add Product Drawer */}
-      {/* <AddProductDrawer onClose={onClose} open={open} /> */}
-      <AddProductDrawer onClose={onClose} open={open}/>
-{/* <AddProductDrawer/> */}
-      {/* Pass the search query to ProductList */}
+      <AddProductDrawer onClose={onClose} open={open} />
       
-      <ProductsList searchQuery={query}/>
+      {/* Pass the search query to ProductsList */}
+      <ProductsList searchQuery={query} />
     </div>
   );
 }

@@ -23,7 +23,7 @@ function App() {
 
   const getInitialRoute = () => {
     if (user?.isLogin && user?.role === 'admin') {
-      return <Navigate to="/admin/users" />;
+      return <Navigate to="/admin" />;
     } else if (user?.isLogin) {
       return <Navigate to="/userdashboard" />;
     } else {
@@ -65,7 +65,7 @@ function App() {
 
         {/* POS routes */}
         <Route
-          path="/userdashboard"
+          path="/userdashboard/"
           element={<PrivateRoute element={<UserDashboard />} />}
         >
           <Route path="useraddproducts" element={<UserAddProducts />} />

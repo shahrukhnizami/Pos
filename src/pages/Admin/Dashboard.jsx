@@ -121,6 +121,7 @@ const Dashboard = () => {
             }}
           >
             <Outlet />
+            <h1 className='text-3xl text-center font-bold'>Well Come Admin Dashboard</h1>
           </Content>
         </Layout>
       </Layout>

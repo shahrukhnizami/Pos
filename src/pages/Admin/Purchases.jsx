@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button,  Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import AddPurchaseDrawer from "../../components/AddPurchaseDrawer";
 import PurchaseList from "../../components/PurchaseList";
 
@@ -10,26 +10,32 @@ function Purchases() {
   const showDrawer = () => {
     setOpen(true);
   };
+
   const onClose = () => {
     setOpen(false);
   };
 
   return (
-    <div>
-      <div className="flex justify-between mb-5">
-      <h1 className="text text-5xl font-bold">All Purchases</h1>
-        <Button  danger type="primary" onClick={showDrawer}>
+    <div className="container mx-auto px-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-5">
+        <h1 className="text-2xl md:text-5xl font-bold">All Purchases</h1>
+        <Button 
+          danger 
+          type="primary" 
+          onClick={showDrawer} 
+          className="mt-4 md:mt-0"
+        >
           Add Purchases
         </Button>
       </div>
 
       <Form>
-      <Form.Item label="Search" name="search" type="text">
-        <Input
-          placeholder="Search products"
-          onChange={(e) => setQuery(e.target.value)} // Set the search query state
-        />
-      </Form.Item>
+        <Form.Item label="Search" name="search" className="mb-4">
+          <Input
+            placeholder="Search purchases"
+            onChange={(e) => setQuery(e.target.value)} // Set the search query state
+          />
+        </Form.Item>
       </Form>
 
       <AddPurchaseDrawer onClose={onClose} open={open} />
