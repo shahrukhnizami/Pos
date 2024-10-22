@@ -1,4 +1,4 @@
-import { Modal, Space, Table, Input, Form } from "antd";
+import { Modal, Space, Table, Input, Form, Spin } from "antd";
 import { collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -69,9 +69,9 @@ function PurchaseList({ searchQuery }) {
 
   const filteredpurchases = purchases.filter(purchase =>
     purchase.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    purchase.quantity.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    purchase.id.toLowerCase().includes(searchQuery.toLowerCase())||
-    purchase.price.toLowerCase().includes(searchQuery.toLowerCase())
+    purchase.quantity.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+    purchase.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    purchase.price.toString().toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const columns = [
@@ -80,7 +80,6 @@ function PurchaseList({ searchQuery }) {
       dataIndex: "id",
       key: "id",
     },
-   
     {
       title: "Purchase Date",
       dataIndex: "purchaseDate",
@@ -120,13 +119,26 @@ function PurchaseList({ searchQuery }) {
 
   return (
     <>
-      <Table dataSource={filteredpurchases} columns={columns} loading={loading} />
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Table 
+          dataSource={filteredpurchases} 
+          columns={columns} 
+          loading={loading} 
+          scroll={{ x: 'max-content' }} // Enable horizontal scrolling
+          className="w-full"
+        />
+      )}
       
       <Modal
         title="Edit Purchase"
         visible={isEditModalOpen}
         onOk={handleEditSubmit}
         onCancel={() => setIsEditModalOpen(false)}
+        centered
       >
         <Form form={form} layout="vertical">
           <Form.Item name="purchaseDate" label="Purchase Date">

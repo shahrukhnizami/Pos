@@ -7,14 +7,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const OrdersList = ({ searchQuery }) => {
-  const [isViewing, setIsViewing] = useState(false); // For viewing order details
-const [viewOrder, setViewOrder] = useState(null); // The order to view
-
+  const [isViewing, setIsViewing] = useState(false);
+  const [viewOrder, setViewOrder] = useState(null);
   const [orders, setOrders] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editOrder, setEditOrder] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [orderStatus, setOrderStatus] = useState('all'); // State for order status (all/processed/unprocessed)
+  const [orderStatus, setOrderStatus] = useState('all');
   const { Option } = Select;
 
   useEffect(() => {
@@ -37,11 +36,12 @@ const [viewOrder, setViewOrder] = useState(null); // The order to view
       setLoading(false);
     }
   };
+
   const view = (record) => {
     setIsViewing(true);
     setViewOrder({ ...record });
   };
-  
+
   const edit = (record) => {
     setIsEditing(true);
     setEditOrder({ ...record });
@@ -93,13 +93,12 @@ const [viewOrder, setViewOrder] = useState(null); // The order to view
     const statusFilter =
       orderStatus === 'all' || (orderStatus === 'processed' && order.isProcessed) || (orderStatus === 'unprocessed' && !order.isProcessed);
 
-      const searchFilter =
+    const searchFilter =
       order.userId.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.customerDetails?.name.toLowerCase().includes(searchQuery.toLowerCase())||
+      order.customerDetails?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.totalAmount.toString().includes(searchQuery);
 
-    // Combine both statusFilter and searchFilter
     return statusFilter && searchFilter;
   });
 
@@ -111,7 +110,7 @@ const [viewOrder, setViewOrder] = useState(null); // The order to view
     },
     {
       title: 'Customer Name',
-      dataIndex: ['customerDetails', 'name'], // Fetching from customerDetails object
+      dataIndex: ['customerDetails', 'name'],
       key: 'customerName',
     },
     {
@@ -135,7 +134,7 @@ const [viewOrder, setViewOrder] = useState(null); // The order to view
               const orderDoc = doc(db, 'orders', record.id);
               await updateDoc(orderDoc, { isProcessed: checked });
               toast.success(`Order marked as ${checked ? 'processed' : 'unprocessed'}`);
-              fetchOrdersFromDB(); // Refresh the list
+              fetchOrdersFromDB();
             } catch (error) {
               console.error('Error updating order status:', error);
               toast.error('Failed to update order status');
@@ -155,8 +154,6 @@ const [viewOrder, setViewOrder] = useState(null); // The order to view
         </Space>
       ),
     },
-   
-    
   ];
 
   return (
@@ -171,7 +168,7 @@ const [viewOrder, setViewOrder] = useState(null); // The order to view
           <Select
             value={orderStatus}
             onChange={(value) => setOrderStatus(value)}
-            style={{ marginBottom: 16, width: 200 }}
+            style={{ marginBottom: 16, width: '100%', maxWidth: 200 }} // Responsive width
           >
             <Option value="all">All Orders</Option>
             <Option value="processed">Processed Orders</Option>
@@ -179,7 +176,13 @@ const [viewOrder, setViewOrder] = useState(null); // The order to view
           </Select>
 
           {/* Orders Table */}
-          <Table columns={columns} dataSource={filteredOrders} rowKey="id" />
+          <Table
+            columns={columns}
+            dataSource={filteredOrders}
+            rowKey="id"
+            scroll={{ x: 'max-content' }} // Enable horizontal scrolling
+            pagination={{ pageSize: 5 }} // Limit rows per page
+          />
 
           {/* Edit Order Modal */}
           <Modal
@@ -188,56 +191,60 @@ const [viewOrder, setViewOrder] = useState(null); // The order to view
             okText="Save"
             onCancel={() => setIsEditing(false)}
             onOk={resetOrder}
+            centered
           >
             <div className="flex flex-col gap-3">
               <label>Total Amount</label>
               <Input
                 value={editOrder?.totalAmount}
                 onChange={(e) => setEditOrder((prev) => ({ ...prev, totalAmount: e.target.value }))}
+                style={{ width: '100%' }} // Full-width input
               />
               <label>Total Quantity</label>
               <Input
                 value={editOrder?.totalQuantity}
                 onChange={(e) => setEditOrder((prev) => ({ ...prev, totalQuantity: e.target.value }))}
+                style={{ width: '100%' }} // Full-width input
               />
               <label>Status</label>
               <Select
                 value={editOrder?.isProcessed ? 'processed' : 'unprocessed'}
                 onChange={(value) => setEditOrder((prev) => ({ ...prev, isProcessed: value === 'processed' }))}
+                style={{ width: '100%' }} // Full-width select
               >
                 <Option value="processed">Processed</Option>
                 <Option value="unprocessed">Unprocessed</Option>
               </Select>
             </div>
           </Modal>
+
+          {/* Order Detail Modal */}
           <Modal
-  open={isViewing}
-  onCancel={() => setIsViewing(false)}
-  footer={null}
->
-  {viewOrder && (
-    <div>
-      
-      <h3 className='text-3xl py-2' >Order Detail</h3>
-      <h3 >Order ID: {viewOrder.id}</h3>
-      <h5>Customer Name:<strong> {viewOrder.customerDetails.name}</strong></h5>
-      <h5>Phone Number: <strong>{viewOrder.customerDetails.phone}</strong></h5>
-      <h5>Address:<strong> {viewOrder.customerDetails.address}</strong></h5>
-      <h5>Total Amount:<strong> {viewOrder.totalAmount}</strong></h5>
-      <h5>Total Quantity:<strong> {viewOrder.totalQuantity}</strong></h5>
-      <h5>Status:<strong> {viewOrder.isProcessed ? 'Processed' : 'Unprocessed'}</strong></h5>
-      
-      <h3 className='text-3xl py-2'>Items</h3>
-      {viewOrder.items?.map(item => (
-        <div key={item.id}>
-          <h5><strong>{item.title}</strong> - Quantity:<strong> {item.quantity}</strong></h5>
-        </div>
-      ))}
-    </div>
-  )}
-</Modal>
-
-
+            open={isViewing}
+            onCancel={() => setIsViewing(false)}
+            footer={null}
+            centered
+          >
+            {viewOrder && (
+              <div>
+                <h3 className='text-3xl py-2'>Order Detail</h3>
+                <h3>Order ID: {viewOrder.id}</h3>
+                <h5>Customer Name: <strong>{viewOrder.customerDetails.name}</strong></h5>
+                <h5>Phone Number: <strong>{viewOrder.customerDetails.phone}</strong></h5>
+                <h5>Address: <strong>{viewOrder.customerDetails.address}</strong></h5>
+                <h5>Total Amount: <strong>{viewOrder.totalAmount}</strong></h5>
+                <h5>Total Quantity: <strong>{viewOrder.totalQuantity}</strong></h5>
+                <h5>Status: <strong>{viewOrder.isProcessed ? 'Processed' : 'Unprocessed'}</strong></h5>
+                
+                <h3 className='text-3xl py-2'>Items</h3>
+                {viewOrder.items?.map(item => (
+                  <div key={item.id}>
+                    <h5><strong>{item.title}</strong> - Quantity: <strong>{item.quantity}</strong></h5>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Modal>
         </>
       )}
       <ToastContainer />

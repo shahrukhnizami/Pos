@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Modal, Space, Table, Switch, Select, Spin, Progress } from 'antd'; // Import Progress component
+import { Input, Modal, Space, Table, Switch, Select, Spin, Progress } from 'antd';
 import { db } from '../assets/Utills/firebase';
 import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -11,10 +11,8 @@ export const StockList = ({ searchQuery }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [productStatus, setProductStatus] = useState('all'); // State for product status (all/active/inactive)
+  const [productStatus, setProductStatus] = useState('all');
   const { Option } = Select;
-
-
 
   useEffect(() => {
     getProductsFromDB();
@@ -23,7 +21,7 @@ export const StockList = ({ searchQuery }) => {
   const getProductsFromDB = async () => {
     setLoading(true);
     try {
-      const ref = collection(db, 'products'); // Assuming 'products' collection
+      const ref = collection(db, 'products');
       const productData = await getDocs(ref);
       if (!productData.empty) {
         const allProducts = productData.docs.map(doc => ({ ...doc.data(), id: doc.id }));
@@ -84,16 +82,13 @@ export const StockList = ({ searchQuery }) => {
     });
   };
 
-  // Set a maximum stock value (you can adjust this value based on your needs or dynamically set it)
   const maxStock = 100;
 
-  // Filter products based on status (all, active, inactive) and search query
   const filteredProducts = products.filter(product => {
     const statusFilter =
-    productStatus === 'all' ||
-    (productStatus === 'active' && product.isEnabled) ||
-    (productStatus === 'inactive' && !product.isEnabled);
- 
+      productStatus === 'all' ||
+      (productStatus === 'active' && product.isEnabled) ||
+      (productStatus === 'inactive' && !product.isEnabled);
 
     const searchFilter =
       product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -120,9 +115,9 @@ export const StockList = ({ searchQuery }) => {
       key: 'quantity',
       render: (quantity) => (
         <Progress
-          percent={(quantity / maxStock) * 100} // Calculate the percentage of stock
-          status={quantity > 0 ? 'active' : 'exception'} // Show as active if there's stock, exception if empty
-          strokeColor={quantity > 20 ? '#52c41a' : '#ff4d4f'} // Green if stock is good, red if low
+          percent={(quantity / maxStock) * 100}
+          status={quantity > 0 ? 'active' : 'exception'}
+          strokeColor={quantity > 20 ? '#52c41a' : '#ff4d4f'}
         />
       ),
     },
@@ -175,49 +170,62 @@ export const StockList = ({ searchQuery }) => {
           <Select
             value={productStatus}
             onChange={(value) => setProductStatus(value)}
-            style={{ marginBottom: 16, width: 200 }}
+            style={{ marginBottom: 16, width: '100%', maxWidth: 200 }} // Responsive width
           >
             <Option value="all">All Products</Option>
             <Option value="active">Enable Products</Option>
             <Option value="inactive">Disable Products</Option>
           </Select>
-          <Table columns={columns} dataSource={filteredProducts} rowKey="id" />
+
+          {/* Products Table with scrollable feature */}
+          <Table
+            columns={columns}
+            dataSource={filteredProducts}
+            rowKey="id"
+            scroll={{ x: 'max-content' }} // Enable horizontal scrolling
+          />
+
+          {/* Edit Product Modal */}
+          <Modal
+            title="Editing Product"
+            open={isEditing}
+            okText="Save"
+            onCancel={() => setIsEditing(false)}
+            onOk={resetProduct}
+            centered
+          >
+            <div className="flex flex-col gap-3">
+              <label>Product Title</label>
+              <Input
+                value={editProduct?.title}
+                onChange={(e) => setEditProduct((prev) => ({ ...prev, title: e.target.value }))}
+                style={{ width: '100%' }} // Full-width input
+              />
+              <label>Price</label>
+              <Input
+                value={editProduct?.price}
+                type="number"
+                onChange={(e) => setEditProduct((prev) => ({ ...prev, price: e.target.value }))}
+                style={{ width: '100%' }} // Full-width input
+              />
+              <label>Quantity</label>
+              <Input
+                value={editProduct?.quantity}
+                onChange={(e) => setEditProduct((prev) => ({ ...prev, quantity: e.target.value }))}
+                type="number"
+                style={{ width: '100%' }} // Full-width input
+              />
+              <label>Category</label>
+              <Input
+                disabled
+                value={editProduct?.category}
+                onChange={(e) => setEditProduct((prev) => ({ ...prev, category: e.target.value }))}
+                style={{ width: '100%' }} // Full-width input
+              />
+            </div>
+          </Modal>
         </>
       )}
-      <Modal
-        title="Editing Product"
-        open={isEditing}
-        okText="Save"
-        onCancel={() => setIsEditing(false)}
-        onOk={resetProduct}
-      >
-        <div className="flex flex-col gap-3">
-          <label>Product Title</label>
-          <Input
-            value={editProduct?.title}
-            onChange={(e) => setEditProduct((prev) => ({ ...prev, title: e.target.value }))}
-          />
-          <label>Price</label>
-          <Input
-            value={editProduct?.price}
-            type="number"
-            onChange={(e) => setEditProduct((prev) => ({ ...prev, price: e.target.value }))}
-          />
-          <label>Quantity</label>
-          <Input
-            value={editProduct?.quantity}
-            onChange={(e) => setEditProduct((prev) => ({ ...prev, quantity: e.target.value }))}
-            type="number"
-          />
-          <label>Category</label>
-          <Input
-            disabled
-            value={editProduct?.category}
-            onChange={(e) => setEditProduct((prev) => ({ ...prev, category: e.target.value }))}
-          />
-         
-        </div>
-      </Modal>
       <ToastContainer />
     </>
   );

@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Input, Modal, Space, Table, Spin, Upload,  message, Select, Switch } from 'antd';
-import { db, storage } from '../assets/Utills/firebase'; // Ensure you import Firebase storage here
+import { Input, Modal, Space, Table, Spin, Upload, message, Select, Switch } from 'antd';
+import { db, storage } from '../assets/Utills/firebase'; 
 import { collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'; // For uploading images
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'; 
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CategoryContext } from '../context/Category';
 
 const ProductsList = ({ searchQuery }) => {
-  const { categories } = useContext(CategoryContext); // Get categories from context
+  const { categories } = useContext(CategoryContext);
   const [products, setProducts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [imageFile, setImageFile] = useState(null); // Store selected image file
-  const [imageUrl, setImageUrl] = useState(null); // Store uploaded image URL
-  const [uploading, setUploading] = useState(false); // Track upload progress
+  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     getProductsFromDB();
@@ -39,35 +39,32 @@ const ProductsList = ({ searchQuery }) => {
   const edit = (record) => {
     setIsEditing(true);
     setEditProduct({ ...record });
-    setImageUrl(record.image); // Set initial image URL
-    setImageFile(null); // Reset the selected image file
+    setImageUrl(record.image);
+    setImageFile(null);
   };
 
-  // Upload image to Firebase Storage
   const handleImageUpload = async () => {
     if (imageFile) {
       const storageRef = ref(storage, `products/${imageFile.name}`);
       const uploadTask = uploadBytesResumable(storageRef, imageFile);
-
-      setUploading(true); // Start uploading
+      setUploading(true);
 
       return new Promise((resolve, reject) => {
         uploadTask.on(
           'state_changed',
           (snapshot) => {
-            // Optional: Can handle upload progress here
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             message.info(`Upload is ${Math.round(progress)}% done`);
           },
           (error) => {
-            setUploading(false); // Stop uploading
+            setUploading(false);
             message.error('Image upload failed');
             reject(error);
           },
           async () => {
-            setUploading(false); // Stop uploading
+            setUploading(false);
             const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-            setImageUrl(downloadUrl); // Update image URL state
+            setImageUrl(downloadUrl);
             resolve(downloadUrl);
           }
         );
@@ -75,7 +72,6 @@ const ProductsList = ({ searchQuery }) => {
     }
   };
 
-  // Handle image file change
   const handleImageChange = ({ file }) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
@@ -87,19 +83,16 @@ const ProductsList = ({ searchQuery }) => {
       message.error('Image must be smaller than 2MB!');
       return;
     }
-    setImageFile(file.originFileObj); // Store the selected file
+    setImageFile(file.originFileObj);
   };
 
   const resetProduct = async () => {
     try {
       let updatedImageUrl = imageUrl;
-
-      // Upload new image if a file is selected
       if (imageFile) {
         updatedImageUrl = await handleImageUpload();
       }
 
-      // Update Firestore product document
       if (editProduct) {
         const productRef = doc(db, 'products', editProduct.id);
         await updateDoc(productRef, {
@@ -108,7 +101,7 @@ const ProductsList = ({ searchQuery }) => {
           quantity: editProduct.quantity,
           category: editProduct.category,
           description: editProduct.description,
-          image: updatedImageUrl, // Update with new image URL
+          image: updatedImageUrl,
         });
         setIsEditing(false);
         toast.success('Product updated successfully');
@@ -131,7 +124,6 @@ const ProductsList = ({ searchQuery }) => {
     });
   };
 
-  // Filter products based on search query
   const filteredProducts = products.filter(product =>
     product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -147,7 +139,7 @@ const ProductsList = ({ searchQuery }) => {
         <img
           src={imageUrl}
           alt="product"
-          style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '5px' }}
+          className="w-12 h-12 object-cover rounded-lg"
         />
       ),
     },
@@ -155,25 +147,25 @@ const ProductsList = ({ searchQuery }) => {
       title: 'Product Title',
       dataIndex: 'title',
       key: 'title',
-      sorter: (a, b) => a.title.localeCompare(b.title), // Sort alphabetically
+      sorter: (a, b) => a.title.localeCompare(b.title),
     },
     {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
-      sorter: (a, b) => a.category.localeCompare(b.category), // Sort alphabetically by category
+      sorter: (a, b) => a.category.localeCompare(b.category),
     },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      sorter: (a, b) => a.description.localeCompare(b.description), // Sort alphabetically by description
+      sorter: (a, b) => a.description.localeCompare(b.description),
     },
     {
       title: 'Quantity',
       dataIndex: 'quantity',
       key: 'quantity',
-      sorter: (a, b) => a.quantity - b.quantity, // Sort numerically by quantity
+      sorter: (a, b) => a.quantity - b.quantity,
     },
     {
       title: 'Action',
@@ -198,7 +190,6 @@ const ProductsList = ({ searchQuery }) => {
               toast.success(`Product ${checked ? 'enabled' : 'disabled'} successfully`);
               getProductsFromDB();
             } catch (error) {
-              console.error('Error updating product status:', error);
               toast.error('Failed to update product status');
             }
           }}
@@ -206,8 +197,6 @@ const ProductsList = ({ searchQuery }) => {
       ),
     },
   ];
-  
-  
 
   return (
     <>
@@ -216,7 +205,13 @@ const ProductsList = ({ searchQuery }) => {
           <Spin size="large" />
         </div>
       ) : (
-        <Table columns={columns} dataSource={filteredProducts} rowKey="id" />
+        <Table
+          columns={columns}
+          dataSource={filteredProducts}
+          rowKey="id"
+          scroll={{ x: 'max-content' }} // Enable horizontal scrolling on smaller screens
+          className="w-full"
+        />
       )}
       <Modal
         title="Edit Product"
@@ -230,22 +225,25 @@ const ProductsList = ({ searchQuery }) => {
           <Input
             value={editProduct?.title}
             onChange={(e) => setEditProduct((prev) => ({ ...prev, title: e.target.value }))}
+            className="w-full"
           />
           <label>Product Price</label>
           <Input
             value={editProduct?.price}
             onChange={(e) => setEditProduct((prev) => ({ ...prev, price: e.target.value }))}
+            className="w-full"
           />
           <label>Quantity</label>
           <Input
             value={editProduct?.quantity}
             onChange={(e) => setEditProduct((prev) => ({ ...prev, quantity: e.target.value }))}
+            className="w-full"
           />
-              <label>Product Category</label>
+          <label>Product Category</label>
           <Select
-            value={editProduct?.category} // Use the selected category
-            onChange={(value) => setEditProduct((prev) => ({ ...prev, category: value }))} // Update category in editProduct
-            style={{ width: '100%' }}
+            value={editProduct?.category}
+            onChange={(value) => setEditProduct((prev) => ({ ...prev, category: value }))}
+            className="w-full"
           >
             {categories.map((category) => (
               <Select.Option key={category.id} value={category.categoryname}>
@@ -257,20 +255,22 @@ const ProductsList = ({ searchQuery }) => {
           <Input
             value={editProduct?.description}
             onChange={(e) => setEditProduct((prev) => ({ ...prev, description: e.target.value }))}
+            className="w-full"
           />
           <label>Product Image</label>
           <Upload
             listType="picture-card"
-            beforeUpload={() => false} // Prevent auto-upload
+            beforeUpload={() => false}
             onChange={handleImageChange}
             showUploadList={{ showPreviewIcon: true }}
             onRemove={() => {
-              setImageFile(null); // Clear selected file
-              setImageUrl(editProduct.image); // Reset to initial image
+              setImageFile(null);
+              setImageUrl(editProduct.image);
             }}
+            className="w-full"
           >
             {imageUrl ? (
-              <img src={imageUrl} alt="product" style={{ width: '100%', height: '100%' }} />
+              <img src={imageUrl} alt="product" className="w-full h-full object-cover" />
             ) : (
               <div>
                 <PlusOutlined />

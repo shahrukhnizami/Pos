@@ -8,7 +8,6 @@ import { AuthContext } from '../../context/Auth';
 
 const { Header, Content, Sider } = Layout;
 
-// Menu items configuration
 const items2 = [
   {
     label: "Users",
@@ -85,12 +84,12 @@ const Dashboard = () => {
           collapsible
           collapsed={collapsed}
           onCollapse={setCollapsed}
-          breakpoint="md"
-          collapsedWidth="0"
+          breakpoint="md" // Responsive breakpoint
+          collapsedWidth="0" // Hide sidebar on small screens
           width={200}
           style={{ background: colorBgContainer }}
         >
-          {/* Toggle button at the top of the sidebar */}
+          {/* Sidebar toggle button */}
           <div style={{ padding: '10px 16px', textAlign: 'left' }}>
             <Button
               type="primary"
