@@ -96,7 +96,7 @@ const Dashboard = () => {
               onClick={() => setCollapsed(!collapsed)}
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               size="large"
-              style={{ marginBottom: '20px', width: '100%' }} // Full-width button for small screens
+              style={{ marginBottom: '20px', width: '100%',backgroundColor:"#dc2626" }} // Full-width button for small screens
             />
           </div>
           <Menu

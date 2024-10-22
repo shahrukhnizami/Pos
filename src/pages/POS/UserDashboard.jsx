@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { LaptopOutlined, NotificationOutlined, RightSquareFilled } from '@ant-design/icons';
+import React, { useContext, useState } from 'react';
+import { LaptopOutlined, MenuFoldOutlined, MenuUnfoldOutlined, NotificationOutlined, RightSquareFilled } from '@ant-design/icons';
 import { Breadcrumb, Button, Layout, Menu, theme, message } from 'antd';
 import { Outlet, useNavigate } from 'react-router';
 import { auth } from '../../assets/Utills/firebase';
@@ -32,6 +32,8 @@ const items2 = [
 }));
 
 const UserDashboard = () => {
+  
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
   const { user } = useContext(AuthContext);
@@ -58,12 +60,25 @@ const UserDashboard = () => {
         </Button>
       </Header>
       <Layout>
-        <Sider
+      <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={setCollapsed}
+          breakpoint="md" // Responsive breakpoint
+          collapsedWidth="0" // Hide sidebar on small screens
           width={200}
-          breakpoint="md"
-          collapsedWidth="0"
           style={{ background: colorBgContainer }}
         >
+          {/* Sidebar toggle button */}
+          <div style={{ padding: '10px 16px', textAlign: 'left' }}>
+            <Button
+              type="primary"
+              onClick={() => setCollapsed(!collapsed)}
+              icon={collapsed ? <MenuUnfoldOutlined  /> : <MenuFoldOutlined />}
+              size="large"
+              style={{ marginBottom: '20px', width: '100%', backgroundColor:"#dc2626" }} // Full-width button for small screens
+            />
+          </div>
           <Menu
             mode="inline"
             defaultSelectedKeys={["/userdashboard/useraddproducts"]} // Adjust the default selected key as needed
@@ -82,7 +97,7 @@ const UserDashboard = () => {
             style={{
               padding: 24,
               margin: 0,
-              minHeight: 280,
+              minHeight: 80,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
